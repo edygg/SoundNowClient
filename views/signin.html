@@ -1,0 +1,47 @@
+<doctype html>
+
+<html lang="es">
+	<head>
+		<title><%= title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<!-- Stylesheets -->
+		<link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+		<link rel="stylesheet" href="/stylesheets/font-awesome.min.css">
+    <link rel="stylesheet" href="/stylesheets/login.css">
+	</head>
+	
+  <body>
+  <div class="container">
+   <div class="row colored">
+        <div class="contcustom">
+          <br><br>
+                 <img class="img-responsive" src="/images/wildzapp-logo-letras.png" alt="" style="width: 200px;
+                                                                                                  heigth:auto; margin-left:10%;">
+             <br><br>
+            <h2>Registrate</h2>
+          
+            <div>
+               <form action="/users/signin" method="post">
+                 <fieldset>
+                    <input type="text" name ="username" placeholder="username">
+                      	<% if (error) { %>
+					               <p><%= error %></p>
+				                <% } %>
+                   <br>
+                  <button class="btn btn-default wide"><span class="fa fa-check med"></span></button>
+                  <br>
+                 </fieldset>  
+                 
+               </form>
+              
+              </div>
+           </div>
+       </div>
+   </div>
+    
+		
+		<!-- Scripts -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<script src="/javascripts/bootstrap.min.js"></script>
+	</body>
+</html>
