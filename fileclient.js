@@ -54,6 +54,13 @@ socket.on('sendfile', function(file) {
 
 //Routes
 
+homeRouter.get('/music', function(req, res, next) {
+  var trackPath = path.join(__dirname, '/dfs/01 Clocks.m4a');
+  res.set({'Content-Type': 'audio/mpeg'});
+  var readStream = fs.createReadStream(trackPath);
+  readStream.pipe(res);
+});
+
 homeRouter.get('/:file_id', function (req, res, next) {
   fs.readFile('dfs/' + req.params.file_id, function(err, data) {
     if (err) {
