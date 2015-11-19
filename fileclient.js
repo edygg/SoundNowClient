@@ -37,17 +37,20 @@ app.use(cors());
 var socket = require('socket.io-client')(config.server_url, { query: 'type=fileclient&server_name=' +  config.name + "&client_url=" + config.client_url });
 
 socket.on('connect', function() {
-  console.log('Conectado al master');
+  console.log('Connected to master');
 });
 
 socket.on('sendfile', function(file) {
   var token = randtoken.generate(16);
-  fs.writeFile("dfs/" + token + '.' + file.file_ext, file.file_content, function(err) {
+  var filePath = "dfs/" + token + '.' + file.file_ext;
+
+  fs.writeFile(filePath, file.file_content, function(err) {
     if (err) {
-      console.log(err); 
+      console.log(err);
     } else  {
-      console.log("Guardado con éxito.");
-      socket.emit('filesaved', { url:config.client_url + token + '.' + file.file_ext, dataEntry: file.dataEntry });
+      console.log("File saved. Name: <" + "dfs/" + filePath + ">.");
+      var fileURL = onfig.client_url + "/" + token + '.' + file.file_ext
+      socket.emit('filesaved', { url: c, songId: file.songId });
     }
   });
 });
@@ -61,27 +64,6 @@ homeRouter.get('/music', function(req, res, next) {
   readStream.pipe(res);
 });
 
-homeRouter.get('/:file_id', function (req, res, next) {
-  fs.readFile('dfs/' + req.params.file_id, function(err, data) {
-    if (err) {
-      console.log(err);
-      res.json({ status: 'error' });
-    } else {
-      res.json({ status: 'ok', file_content: data.toString() });
-    }
-  });
-});
-
-homeRouter.post('/:file_id', function(req, res, next) {
-  fs.writeFile('dfs/' + req.params.file_id, req.body.file_content, function(err, data) {
-    if (err) {
-      console.log(err);
-      res.json({ status: 'error' });
-    } else {
-      res.json({ status: 'ok' });
-    }
-  });
-});
 
 app.use('/', homeRouter);
 

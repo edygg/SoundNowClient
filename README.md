@@ -70,7 +70,7 @@ Explicando el script anterior, busque los comentarios que mencionan ```# Referen
 
 Después de crear el archivo post-receive, se le da permisos de ejecución al script con el siguiente comando
 ```
-root:~/SoundNowClient/hooks chmod +x post-receive
+root:~/SoundNowClient/hooks $ chmod +x post-receive
 ```
 
 ### Configuración del servidor de producción en los clientes de desarrollo
@@ -90,7 +90,30 @@ git push production master
 ```
 
 ## Instalación y verificación de correcto funcionamiento
+Se debe crear una carpeta llamada ```dfs``` donde se almacenarán los archivos de las canciones, utilice en siguiente comando en la carpeta donde se alojan los archivos del servidor de un SoundNow Client Node:
+```
+root:~/server $ mkdir dfs
+```
 
+Luego en el directorio actual, copiar el archivo config.js.sample a un archivo config.js y completelo con la información respectiva:
+- ```client_url``` es la dirección url o dirección IP del SoundNow Client Node actual.
+- ```server_url``` es la dirección url o dirección IP del SoundNow Server Node.
+- ```name``` es el nombre que identifica al SoundNow Client Node actual.
+
+Ejecute el comando para instalar todas las dependencias necesarias para ejecutar el SoundNode Client Node:
+```
+root:~/server $ npm install
+```
+
+Instale el módulo ```forever``` para ejecutar la aplicación como un deamon en la instancia de servidor:
+```
+npm -g install forever
+```
+
+Ejecute el programa con la siguiente linea de comandos posicionado en la carpeta server:
+```
+root:~/server $ forever start bin/www
+```
 ***********************************
 [GithubIcon]: https://assets-cdn.github.com/favicon.ico
 
