@@ -34,7 +34,7 @@ app.use(cors());
 
 // Socket client
 
-var socket = require('socket.io-client')(config.server_url, { query: 'type=fileclient&server_name=' +  config.name + "&client_url=" + config.client_url });
+var socket = require('socket.io-client')(config.server_url + "/", { query: 'type=fileclient&server_name=' +  config.name + "&client_url=" + config.client_url });
 
 socket.on('connect', function() {
   console.log('Connected to master');
