@@ -49,8 +49,8 @@ socket.on('sendfile', function(file) {
       console.log(err);
     } else  {
       console.log("File saved. Name: <" + "dfs/" + filePath + ">.");
-      var fileURL = config.client_url + "/" + token + '.' + file.file_ext
-      socket.emit('filesaved', { url: c, songId: file.songId });
+      var fileURL = config.client_url + "/" + token + '.' + file.file_ext;
+      socket.emit('filesaved', { url: fileURL, songId: file.songId });
     }
   });
 });
