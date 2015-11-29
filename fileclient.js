@@ -10,6 +10,7 @@ var http = require('http');
 var fs = require('fs');
 var randtoken = require('rand-token');
 var cors = require('cors');
+var timeout = require('connect-timeout');
 
 var config = require('./config');
 
@@ -23,6 +24,8 @@ app.engine('html', require('ejs').renderFile);
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
+app.use(timeout('900s'));
+app.use(haltOnTimedout);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -31,6 +34,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //CORS
 app.use(cors());
+
+//timeout
+function haltOnTimedout(req, res, next){
+  if (!req.timedout) next();
+}
 
 // Socket client
 
@@ -44,7 +52,7 @@ socket.on('sendfile', function(file) {
   var token = randtoken.generate(16);
   var filePath = "dfs/" + token + '.' + file.file_ext;
 
-  fs.writeFile(filePath, file.file_content, function(err) {
+  fs.writeFile(filePath, file.file_content, { encoding: 'binary' }, function(err) {
     if (err) {
       console.log(err);
     } else  {
