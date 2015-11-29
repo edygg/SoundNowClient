@@ -48,8 +48,8 @@ socket.on('sendfile', function(file) {
     if (err) {
       console.log(err);
     } else  {
-      console.log("File saved. Name: <" + "dfs/" + filePath + ">.");
-      var fileURL = config.client_url + "/" + token + '.' + file.file_ext;
+      console.log("File saved. Name: <" + filePath + ">.");
+      var fileURL = config.client_url + "/music/" + token + '.' + file.file_ext;
       socket.emit('filesaved', { url: fileURL, songId: file.songId });
     }
   });
@@ -57,8 +57,8 @@ socket.on('sendfile', function(file) {
 
 //Routes
 
-homeRouter.get('/music', function(req, res, next) {
-  var trackPath = path.join(__dirname, '/dfs/01 Clocks.m4a');
+homeRouter.get('/music/:file', function(req, res, next) {
+  var trackPath = path.join(__dirname, '/dfs/' + req.params.file);
   res.set({'Content-Type': 'audio/mpeg'});
   var readStream = fs.createReadStream(trackPath);
   readStream.pipe(res);
