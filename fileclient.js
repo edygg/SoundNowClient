@@ -60,6 +60,7 @@ socket.on('sendfile', function(file) {
 homeRouter.get('/music/:file', function(req, res, next) {
   var trackPath = path.join(__dirname, '/dfs/' + req.params.file);
   var stats = fs.statSync(__dirname + '/dfs/' + req.params.file);
+  res.set({ 'Access-Control-Allow-Origin': '*' });
   res.set({ 'Content-Type': 'audio/mpeg' });
   res.set({ 'Content-Length': stats.size });
   res.set({ 'Access-Control-Expose-Headers': 'Accept-Ranges, Content-Encoding, Content-Length, Content-Range' });
