@@ -59,7 +59,7 @@ socket.on('sendfile', function(file) {
 
 homeRouter.get('/music/:file', function(req, res, next) {
   var trackPath = path.join(__dirname, '/dfs/' + req.params.file);
-  var stats = fs.statSync(path);
+  var stats = fs.statSync(__dirname + '/dfs/' + req.params.file);
   res.set({ 'Content-Type': 'audio/mpeg' });
   res.set({ 'Content-Length': stats.size });
   var readStream = fs.createReadStream(trackPath);
